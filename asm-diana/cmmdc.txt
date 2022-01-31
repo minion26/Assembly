@@ -1,0 +1,62 @@
+/*CMMDC-scaderi repetate
+
+	int a = 2;
+	int b = 10;
+	int rezultat;
+
+	_asm {
+		mov eax, 0;
+		mov ebx, 0;
+
+		mov eax, a;
+		mov ebx, b;
+
+	bucla:
+		cmp eax, ebx; //a!=b
+		je afara_while;
+		cmp eax, ebx; 
+		jg afara_if;
+		sub ebx, eax;
+		jmp bucla;
+	afara_if: //a<=b
+		sub eax, ebx;
+		jmp bucla;
+	afara_while:
+		mov rezultat, eax;
+	}
+	cout << rezultat; */
+
+
+	/*CMMDC-impartiri repetate
+	int a = 12;
+	int b = 6;
+	int rezultat;
+	
+	_asm {
+		mov eax, 0;
+		mov ebx, 0;
+		mov edx, 0;
+		mov ecx, 0;
+
+		mov eax, a;
+		mov ebx, b;
+		div ebx; //ebx/edx
+		mov ecx, edx;//ecx va fi restul
+		mov eax, a; //eax s a schimbat
+		mov edx, 0;
+		bucla:
+		cmp ecx, 0; //compar restul cu 0
+		jle afara_while; 
+		mov eax, ebx; //a=b;
+		mov edi, eax; //pun eax in edi pt a nu pierde valoarea
+		mov ebx, ecx; //b=rest;
+		mov edx, 0;
+		div ebx;
+		mov ecx, edx; //noul rest
+		mov eax, edi; //restaurez valoarea din edi
+		jmp bucla;
+	afara_while:
+
+		mov rezultat, ebx;
+	}
+	cout << rezultat; */

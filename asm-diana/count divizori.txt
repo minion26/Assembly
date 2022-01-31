@@ -1,0 +1,40 @@
+int CountDiv(int* vector, int count, int divizor)
+{
+    _asm {
+        mov eax, 0;
+        mov ebx, 0;
+        mov ecx, 0;
+        mov edx, 0;
+        mov esi, 0;
+        mov edi, 0;
+
+        mov esi, vector; //pointer la vector
+        mov ecx, 0; //i
+        mov ebx, divizor; //ebx=divizor
+        mov edi, 0; //nr 
+
+    for1:
+        cmp ecx, count; //i<count
+        jge afara;
+        mov edx, 0;
+        mov eax, [esi + ecx * 4];
+        div ebx;
+        cmp edx, 0;
+        jne restul_este_1;
+        inc edi;
+        inc ecx;
+        jmp for1;
+    restul_este_1:
+        inc ecx;
+        jmp for1;
+    afara:
+        mov eax, edi;
+
+    }
+}
+int main()
+{
+    int v1[] = { 15,6,100,3,25,10,19 };
+    printf("%d", CountDiv(v1, 7, 5));
+    return 0;
+}

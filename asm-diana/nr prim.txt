@@ -1,0 +1,48 @@
+/*numar prim
+	int n = 11;
+	int rezultat;
+
+	_asm {
+		mov eax, 0;
+		mov ebx, 0;
+		mov ecx, 0;
+		mov edx, 0;
+		mov esi, 0;
+		mov edi, 0;
+
+		mov eax, n;
+		mov ecx, 2;//d
+		
+		mov edi, n;
+		shr edi, 1; //n/2
+
+		bucla:
+		cmp ecx, edi; //ecx<=edi => d<=n/2
+		jg maimare; 
+		mov edx, 0;
+		mov eax, n;
+		div ecx; //n/d => restul e in edx
+		cmp edx, 0;
+		je afara; //daca restul este 0, sar afara din bucla
+		inc ecx;
+		jmp bucla;
+
+
+	maimare:
+		jmp afara2;
+
+	afara:
+		mov ebx, 0;
+		jmp rez;
+
+	afara2:
+		mov ebx, 1;
+
+	rez:
+		mov rezultat, ebx;
+
+	}
+	if (rezultat == 1)
+		cout << "prim";
+	else
+		cout << "nu e prim"; */

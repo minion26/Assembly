@@ -1,0 +1,23 @@
+
+	/*maximul dintre doua numere
+	int a = 10;
+	int b = 15;
+	int rezultat;
+
+	_asm {
+		mov eax, 0;
+		mov ebx, 0;
+		mov ecx, 0; //rezultatul
+		
+		mov eax, a;
+		mov ebx, b;
+
+		cmp eax, ebx;
+		jle afara;
+		mov ecx, eax;
+	afara:
+		mov ecx, ebx;
+
+		mov rezultat, ecx;
+	}
+	cout << rezultat; */

@@ -1,0 +1,30 @@
+//calculeaza media de pe diagonala principala
+	int mat[3][3] = { {1,2,3}, {4,5,6}, {7,6,9} };
+	int* p = (int*)mat;
+	int C = 3;
+	int i;
+	int rez;
+	
+	_asm {
+		mov esi, p ; // pointer la matrice
+		mov ebx, C; //nr de linii=nr de coloane
+		mov edi, 0; //suma
+		mov ecx, 0;//i
+
+	for1:
+		cmp ecx, ebx; //i<C
+		jge afara_din_for1;
+		//mat[i][i]
+		mov eax, ebx; //eax=nr de coloane
+		mul ecx; //eax=i*C
+		add eax, ecx; //eax=eax*C+i
+		add edi, dword ptr[esi + eax * 4];
+		inc ecx;
+		jmp for1;
+	afara_din_for1:
+		mov edx, 0;
+		mov eax, edi; //suma 
+		div ebx; // impartit la n 
+		mov rez ,eax
+	}
+	cout << rez << endl;

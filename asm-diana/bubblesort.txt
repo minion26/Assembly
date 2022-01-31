@@ -1,0 +1,35 @@
+void bubblefunc(int*, int)
+{
+	int ok = 1;
+	_asm {
+		mov eax, [ebp + 8]; //pointer a vector
+		mov ebx, [ebp + 12]; //nr de elemente
+
+	whileok:
+		cmp ok, 1;
+		jne afara_whileok;
+		mov ok, 0;
+		mov ecx, 0;
+	for1:
+		cmp ecx, ebx; //i<n
+		jge afara_for1;
+		mov edx, [eax + ecx * 4]; //a[i]
+		mov esi, [eax + ecx * 4 + 4]; //a[i+1]
+		cmp edx, esi; //a[i]>a[i+1]
+		jle afara_if;
+		mov[eax + ecx * 4], esi;
+		mov[eax + ecx * 4 + 4], edx;
+		mov ok, 1;
+		inc ecx;
+		jmp for1;
+	afara_if:
+		//mov ok, 0;
+		inc ecx;
+		jmp for1;
+	afara_for1:
+		jmp whileok;
+
+	afara_whileok:
+	}
+
+}

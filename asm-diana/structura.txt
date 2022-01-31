@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+
+struct triunghi {
+    unsigned a; //offset 0
+    unsigned b; //offset 4
+    unsigned c; //offset 6
+};
+//A = sqrt(p(p-a)(p-b)(p-c))
+unsigned radical(unsigned x)
+{
+    return sqrt(x);
+}
+
+
+unsigned aria(triunghi* t)
+{
+    int rez= 696969;
+    _asm {
+        mov edi, t;
+        // mov ebx, [edi]; //ebx=a
+        // mov ecx, [edi + 4]; //ecx=b
+        // mov esi, [edi + 8]; //esi=c
+
+        mov eax, 0;
+        add eax, [edi];
+        add eax, [edi + 4];
+        add eax, [edi + 8];
+        shr eax, 1; //eax am semiperimetrul
+
+       
+        mov edx, eax; //edx=p
+        sub edx, [edi]; //(p-a)
+        mov ebx, edx; //ebx=(p-a)
+
+        mov edx, eax;
+        sub edx, [edi + 4]; //(p-b)
+        mov ecx, edx; //ecx=(p-b)
+
+        mov edx, eax;
+        sub edx, [edi + 8]; //(p-c)
+        mov esi, edx; //esi=(p-c)
+
+        mul ebx; //eax=(p-a)*p
+        mul ecx; //eax=p*(p-a)*(p-b)
+        mul esi; //eax=p*(p-a)*(p-b)*(p-c)
+
+        push eax;
+        call radical;
+        //pop eax;
+        add esp, 4;
+        //mov rez, eax;
+
+
+        
+    }
+    //return radical(rez);
+}
+
+int main()
+{
+    triunghi t;
+    int n = sizeof(triunghi);
+    int rezultat;
+    t.a = 6;
+    t.b = 8;
+    t.c = 10;
+
+   cout<< aria(&t);
+    //cout << rezultat;
+}
