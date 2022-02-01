@@ -1,0 +1,51 @@
+//ana . are,mere.si.mere
+
+int nrTok(char*)
+{
+    _asm {
+        mov esi, [ebp + 8]; //pointer
+        mov ecx, 0; //i=0
+        mov edx, 0; //nr de cuvinte
+        mov ebx, 0; //state=1 (in) sau 0 (out)
+
+    bucla:
+        mov al, [esi + ecx * 1]; //al=s[i]
+        cmp al, 0; //compar cu NULL
+
+        je am_terminat_cuvantul;
+
+        cmp al, ' '; //compar cu spatiu
+        je separator;
+        //jmp nu_separator;
+
+        cmp al, ','; //compar cu virgula
+        je separator;
+        //jmp nu_separator;
+
+        cmp al, '.'; //compar cu punct
+        je separator;
+
+        jmp nu_separator;
+
+    separator:
+        mov ebx, 0; //state=OUT
+        inc ecx;
+        jmp bucla;
+        
+    nu_separator:
+        cmp ebx, 0; //compar cu OUT, daca e IN sar peste
+        je state_out; //daca e diferit de 0, sar
+        inc ecx; //merg mai departe in cuvant
+        jmp bucla;
+
+    state_out:
+        mov ebx, 1; //state=IN
+        inc edx; //nr cuvinte ++
+        inc ecx; //merg mai departe in cuvant;
+        jmp bucla;
+
+    am_terminat_cuvantul:
+        mov eax, edx;
+
+    }
+}
