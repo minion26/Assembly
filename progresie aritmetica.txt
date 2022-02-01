@@ -1,0 +1,76 @@
+#include <iostream>
+using namespace std;
+
+int progresie(int*, int)
+{
+    //returneaza 0 daca nu este progresie, respectiv 1 daca este progresie
+    _asm {
+        mov esi, [ebp + 8]; //pointerul la vector
+        mov edi, [ebp + 12]; //nr de elemente din vector
+        mov ecx, 0; //contorul i
+        sub edi, 2; //n-2
+
+        mov eax, [esi + ecx * 4 + 4];  //v[1]
+        sub eax, dword ptr[esi + ecx * 4]; //eax=v[1]-v[0]
+        //eax contine ratia mea
+
+        //for(i=0;i<n-2;i++)
+            //if(v[i+1]-v[i]!=ratia)
+                //jmp afara =>nu e bine
+            //else
+                //continui
+
+    bucla:
+        cmp ecx, edi; //i<=n-2
+        jg am_terminat_vectorul;
+        mov ebx, [esi + ecx * 4 + 4];
+        sub ebx, dword ptr[esi + ecx * 4];
+        //in ebx am ratia curent
+        cmp ebx, eax; //compar cele 2 ratii
+        jne nu_sunt_egale; //sar daca nu sunt egale
+        //daca sunt egale:
+        inc ecx;
+        jmp bucla;
+
+    nu_sunt_egale:
+        mov eax, 0;
+        jmp afara_de_tot;
+
+    am_terminat_vectorul:
+        mov eax, 1;
+        jmp afara_de_tot;
+
+    afara_de_tot:
+        nop;
+    }
+}
+int main()
+{
+    int a[] = { 1,3,5,7,9 };
+    int n = 5;
+    int* p = a;
+    int rezultat;
+    _asm {
+        mov eax, 0;
+        mov ebx, 0;
+        mov ecx, 0;
+        mov edx, 0;
+        mov esi, 0;
+        mov edi, 0;
+
+        mov eax, p; //pointer la vector;
+        mov ebx, n; //nr de elemente
+
+        push ebx;
+        push eax;
+        call progresie;
+        add esp, 8;
+
+        mov rezultat, eax;
+    }
+
+    if (rezultat == 1)
+        cout << "in progresie";
+    else
+        cout << "nu sunt in progresie";
+}
